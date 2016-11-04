@@ -56,7 +56,7 @@ $(function () {
     } else {
       // Send a post request to the charges route
       $.post('/donations', {stripeToken: response.id, amount: $('#amount').val()})
-      .done(res => showSuccess())
+      .done(res => showSuccess(res))
       .fail(err => handleErrors(err.responseJSON))
       .always(function() {
         $('#submit-btn').prop("disabled", false);
@@ -64,10 +64,12 @@ $(function () {
     }
   };
 
-  function showSuccess () {
-    // TODO : Show a success message to the user
-    // Hide the spinner and show the form again
+  function showSuccess (res) {
+    // Hide the spinner
     hideSpinner();
+
+    // Show the user the success message
+    showMessage('The charge was succesful, thank you for donating.');
   };
 
   /**
