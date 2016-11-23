@@ -5,7 +5,7 @@ module StripeHandlerModule
 
   # Set the stripe API key when we include the module
   included do
-    Stripe.api_key = "60c9901e0254a9c6483e57d882c7e06e" # tp api key
+    Stripe.api_key = "insert-your-private-stripe-key-here" # tp api key
   end
 
   # Create a charge
@@ -34,7 +34,7 @@ module StripeHandlerModule
       Stripe::StripeError => e      # Generic stripe error
 
       if e.json_body
-        error = {error: e.json_body[:error]}
+        error = {error: e.json_body[:error], status: e.http_status}
       else
         error = {error: e.message}
       end

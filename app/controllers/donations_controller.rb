@@ -16,7 +16,7 @@ class DonationsController < ApplicationController
 
     # Check if there was an error with the charge
     if charge[:error]
-      render(json: charge[:error], status: 422) && return
+      render(json: charge[:error], status: charge[:status]) && return
     end
 
     # No errors, return the charge to the user
