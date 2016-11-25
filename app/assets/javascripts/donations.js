@@ -10,7 +10,7 @@ $(function () {
   });
 
   // Set your stripe publishable key here
-  Stripe.setPublishableKey('pk_test_reFgElntVfcZYDzydQBhfrMj');
+  Stripe.setPublishableKey('YOUR-PUBLISHABLE-KEY');
 
   /**
    * Take control of the form submission. Prevent the default submission
