@@ -41,7 +41,7 @@ Open [donations.js](app/assets/javascripts/donations.js) and replace `'YOUR-PUBL
 Stripe.setPublishableKey('YOUR-PUBLISHABLE-KEY');
 ```
 
-Last thing we need to do before starting the application is insert our TestingPaysapi key. You can find that in the [instructions](https://admin.testingpays.com/teams_apis/stripe-v1-charges) or in your [team page](https://admin.testingpays.com/teams). Open [stripe_handler_module](app/controllers/concerns/stripe_handler_module.rb) Insert your API key in place of `"YOUR-API-KEY-HERE"`.
+Last thing we need to do before starting the application is insert our TestingPays api key. You can find that in the [instructions](https://admin.testingpays.com/teams_apis/stripe-v1-charges) or in your [team page](https://admin.testingpays.com/teams). Open [stripe_handler_module](app/controllers/concerns/stripe_handler_module.rb) Insert your API key in place of `"YOUR-API-KEY-HERE"`.
 
 ```ruby
 # app/controllers/concerns/stripe_handler_module.rb
