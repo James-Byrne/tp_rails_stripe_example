@@ -5,7 +5,7 @@ module StripeHandlerModule
 
   # Set the stripe API key when we include the module
   included do
-    Stripe.api_key = "YOUR-API-KEY-HERE" # tp api key
+    Stripe.api_key = ENV['YOUR_API_KEY'] # tp api key
   end
 
   # Create a charge
