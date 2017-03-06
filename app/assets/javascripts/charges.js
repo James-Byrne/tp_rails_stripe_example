@@ -40,7 +40,7 @@ $(function () {
   }
 
   /**
-   * Sends a post request to the donation_controller with the amount and token
+   * Sends a post request to the charges with the amount and token
    * attributes.
    *
    * @method stripeResponseHandler
@@ -55,7 +55,7 @@ $(function () {
 
     } else {
       // Send a post request to the charges route
-      $.post('/donations', {stripeToken: response.id, amount: $('#amount').val()})
+      $.post('/charges', {stripeToken: response.id, amount: $('#amount').val()})
       .done(res => showSuccess(res))
       .fail(err => handleErrors(err.responseJSON))
       .always(function() {
@@ -69,7 +69,7 @@ $(function () {
     hideSpinner();
 
     // Show the user the success message
-    showMessage('The charge was succesful, thank you for donating.');
+    showMessage('The charge was succesful, thank you.');
   };
 
   /**

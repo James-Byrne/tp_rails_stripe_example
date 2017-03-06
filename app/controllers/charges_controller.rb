@@ -1,4 +1,4 @@
-class DonationsController < ApplicationController
+class ChargesController < ApplicationController
   include StripeHandlerModule
 
   def index
