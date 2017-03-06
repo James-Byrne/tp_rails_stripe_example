@@ -10,36 +10,36 @@ In order to run this application you will need the following:
 
 - [node.js](https://nodejs.org/en/) (latest LTS)
 
-## setup
+## Setup
 
-firstly pull down the repo.
+Firstly pull down the repo.
 
 ``` bash
 $ git clone https://github.com/testingpays/stripe_rails_example.git
 ```
 
-next enter the directory and install the applications dependencies using bundler
+Next enter the directory and install the applications dependencies using bundler
 
 ``` bash
 $ gem install bundler
 $ bundle install
 ```
 
-## running the application
+## Running the application
 
-now that we have the application installed and our api keys setup we can start using the application. firstly lets run the tests to make everything is in order.
+Now that we have the application installed and our api keys setup we can start using the application. firstly lets run the tests to make everything is in order.
 
 ```bash
 $ rails test
 ```
 
-your tests should have ran successfully. now to run the application use the following command.
+Your tests should have ran successfully. now to run the application use the following command.
 
 ```bash
 $ rails server
 ```
 
-your application should now be running [locally](http://localhost:3000/charges).
+Your application should now be running [locally](http://localhost:3000/charges).
 
 
 ### API Keys
