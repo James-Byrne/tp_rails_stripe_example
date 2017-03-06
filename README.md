@@ -1,9 +1,6 @@
-# Testing Pays
-<img src="TestingPaysLogo.png" width="250" height="200" align="right">
-> Demonstrating how Testing Pays API can be used to test Stripe's payment processor.
+# Stripe Rails Example Application
 
-### Existing Projects
-To integrate an existing project with TestingPays we recommend you follow the short guide on your [instructions page](https://admin.testingpays.com/teams_apis/stripe-v1-charges).
+Integrated example application using [Stripe's Charges API](https://stripe.com/docs/api#create_charge).
 
 ### Requirements
 In order to run this application you will need the following:
@@ -11,80 +8,78 @@ In order to run this application you will need the following:
   - We recommend you use [rvm](https://rvm.io/) to manage your ruby versions
   - If you are using windows you can find a ruby installer [here](http://rubyinstaller.org/downloads/)
 
-
 - [node.js](https://nodejs.org/en/) (latest LTS)
 
+## setup
 
-##### Accounts
-You will also require an account with both [Stripe](https://stripe.com/) and [TestingPays](http://www.testingpays.com/).
+firstly pull down the repo.
 
-### Setup
-Firstly pull down the repo.
 ``` bash
-$ git clone https://github.com/ThePaymentWorks/tp_rails_stripe_example.git
+$ git clone https://github.com/testingpays/stripe_rails_example.git
 ```
 
-Next enter the directory and install the applications dependencies.
+next enter the directory and install the applications dependencies using bundler
 
 ``` bash
-$ cd tp_rails_stripe_example/
+$ gem install bundler
 $ bundle install
 ```
 
-##### API Keys
+## running the application
+
+now that we have the application installed and our api keys setup we can start using the application. firstly lets run the tests to make everything is in order.
+
+```bash
+$ rails test
+```
+
+your tests should have ran successfully. now to run the application use the following command.
+
+```bash
+$ rails server
+```
+
+your application should now be running [locally](http://localhost:3000/charges).
+
+
+### API Keys
+
 In order to work with Stripe we need to provide our [Publishable api key](https://stripe.com/docs/dashboard#api-keys). This is the key Stripe uses to [create tokens](https://stripe.com/docs/api#create_card_token).
 
-Open [donations.js](app/assets/javascripts/donations.js) and replace `'YOUR-PUBLISHABLE-KEY'` with the key [stripe gave you](https://support.stripe.com/questions/where-do-i-find-my-api-keys).
+Open [charges.js](app/assets/javascripts/charges.js) and replace `'YOUR-PUBLISHABLE-KEY'` with the key [stripe gave you](https://support.stripe.com/questions/where-do-i-find-my-api-keys).
 
 ```js
-// app/assets/javascripts/donations.js
+// app/assets/javascripts/charges.js
 Stripe.setPublishableKey('YOUR-PUBLISHABLE-KEY');
 ```
 
-Last thing we need to do before starting the application is insert our TestingPays api key. You can find that in the [instructions](https://admin.testingpays.com/teams_apis/stripe-v1-charges) or in your [team page](https://admin.testingpays.com/teams). Open [stripe_handler_module](app/controllers/concerns/stripe_handler_module.rb) Insert your API key in place of `"YOUR-API-KEY-HERE"`.
+### Developing with Testing Pays
+
+In order to work with [Testing Pays](http://www.testingpays.com) you need to provide your API Key. You can find that in the [instructions](https://admin.testingpays.com/) or in your team page. Open [stripe_handler_module](app/controllers/concerns/stripe_handler_module.rb) Insert your API key in place of `"YOUR-API-KEY-HERE"`.
 
 ```ruby
 # app/controllers/concerns/stripe_handler_module.rb
 
 # Set the stripe API key when we include the module
 included do
-  Stripe.api_key = "YOUR-API-KEY-HERE" # tp api key
+  Stripe.api_key = "YOUR-API-KEY-HERE" # Testing Pays key
 end
 ```
 
-### Running the application
-Now that we have the application installed and our api keys setup we can start using the application. Firstly lets run the tests to make everything is in order.
-
-```bash
-$ rails t
-```
-
-Your tests should have ran successfully. Now to run the application use the following command.
-
-```bash
-$ rails s
-```
-
-Your application should now be running [locally](http://localhost:3000/donations).
-
-
-### Integrating with TestingPays
-We do not recommend you use this application in production. It is just for example purposes.
-
-This application points to the TestingPays Stripe charges api when running in both development and testing modes. This is set in the [testing_pays initializer](config/initializers/testing_pays.rb).
+This application points to the Testing Pays Stripe charges API sim when running in both development and testing modes. This is set in the [testing_pays initializer](config/initializers/testing_pays.rb).
 
 ```ruby
 # config/initializers/testing_pays.rb
 if Rails.env.development? || Rails.env.test?
   module Stripe
-    @api_base = "https://api.testingpays.com/stripe"
+    @api_base = "https://api.testingpays.com/#{ENV["TESTING_PAYS_KEY"]}/realex/v1/auth"
   end
 end
 ```
 
+### Unit Testing with Testing Pays
 
-### Testing with TestingPays
-TestingPays makes testing many types of responses easy. In order to get a particular response simply pass in the associated response mapping. E.g.
+Testing Pays makes testing many types of responses easy. In order to get a particular response simply pass in the associated response mapping. E.g.
 
 ```ruby
 amount: 91  # => rate_limit_error
@@ -92,15 +87,15 @@ amount: 80  # => card_expired
 amount: 0   # => success
 ```
 
-For a full list of response mappings see the [response mappings table](https://admin.testingpays.com/teams_apis/stripe-v1-charges).
+For a full list of response mappings see the [response mappings table](https://admin.testingpays.com/).
 
 ```ruby
-# test/controllers/donations_controller_test.rb
+# test/controllers/charges_controller_test.rb
 
 require 'test_helper'
 require 'minitest/mock'
 
-class DonationsControllerTest < ActionController::TestCase
+class ChargesControllerTest < ActionController::TestCase
 
   test "should create a successful charge with status code of 200" do
     post :create, params: {
