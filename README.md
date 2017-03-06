@@ -2,7 +2,7 @@
 
 Integrated example application using [Stripe's Charges API](https://stripe.com/docs/api#create_charge).
 
-### Requirements
+## Requirements
 In order to run this application you will need the following:
 - [ruby](https://www.ruby-lang.org/en/) (version 2.2+)
   - We recommend you use [rvm](https://rvm.io/) to manage your ruby versions
