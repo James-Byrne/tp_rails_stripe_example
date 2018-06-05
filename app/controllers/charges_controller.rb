@@ -11,8 +11,21 @@ class ChargesController < ApplicationController
     amount = params[:amount]
     token = params[:stripeToken]
 
-    # Create a charge
-    charge = create_charge(amount, token)
+    if token
+      # Create a charge with the token
+      charge = create_charge(amount, token)
+    else
+      # Use the card details passed in:
+      card_details = {
+        exp_month: params["expiry-month"],
+        exp_year: params["expiry-year"],
+        number: params["card-number"].gsub(" ", ""),
+        cvc: params["cvv"],
+        object: "card"
+      }
+
+      charge = create_charge(amount, card_details)
+    end
 
     # Check if there was an error with the charge
     if charge[:error]
